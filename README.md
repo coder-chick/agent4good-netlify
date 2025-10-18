@@ -10,8 +10,9 @@ Community Health & Wellness Advisor - Air Quality Monitoring Platform optimized 
 ## 🌟 Features
 
 - **Serverless Architecture**: Powered by Netlify Functions
-- **Real-time Air Quality Data**: BigQuery integration
-- **AI-Powered Insights**: Gemini AI analysis
+- **Multi-Agent AI System**: Google Agent SDK integration
+- **Real-time Air Quality Data**: BigQuery integration with intelligent agents
+- **AI-Powered Insights**: Gemini AI analysis and agent-driven responses
 - **Static Site Generation**: Fast CDN delivery
 - **Responsive Design**: Modern, mobile-first UI
 - **Interactive Visualizations**: Chart.js and D3.js
@@ -80,18 +81,51 @@ Configure these in Netlify Dashboard > Site Settings > Environment Variables:
 │   (AWS Lambda)   │
 └─────────┬───────┘
           │
-          ├──────────────┐
-          ▼              ▼
-┌─────────────┐  ┌──────────────┐
-│  BigQuery   │  │  Gemini AI   │
-│  Database   │  │   (SDK)      │
-└─────────────┘  └──────────────┘
+          ├──────────────┬──────────────┐
+          ▼              ▼              ▼
+┌─────────────┐  ┌──────────────┐  ┌──────────────┐
+│  BigQuery   │  │  Gemini AI   │  │ Multi-Agent  │
+│  Database   │  │   (SDK)      │  │    System    │
+└─────────────┘  └──────────────┘  └──────────────┘
+                                          │
+                                          ▼
+                                  ┌──────────────┐
+                                  │ Google Agent │
+                                  │     SDK      │
+                                  └──────────────┘
 ```
+
+## 🤖 Intelligent Agent System
+
+The platform includes two sophisticated AI agents built with Google Agent SDK:
+
+### **BigQuery Agent** (`multi_tool_agent_bquery_tools`)
+- **Purpose**: Real-time data analysis and querying
+- **Capabilities**: 
+  - Direct BigQuery integration
+  - Complex air quality data analysis
+  - Location-aware queries with county-to-state mapping
+  - Real-time data insights
+
+### **Multi-Tool Agent** (`multi_tool_agent`)
+- **Purpose**: General-purpose AI assistant
+- **Capabilities**:
+  - Natural language processing
+  - Health recommendations
+  - Multi-domain knowledge
+  - Fallback support when BigQuery agent is unavailable
+
+### **Agent Features**:
+- **Smart Location Detection**: Automatic county-to-state mapping
+- **Contextual Responses**: Understanding of air quality and health relationships
+- **Fallback Mechanisms**: Graceful degradation when services are unavailable
+- **Async Processing**: Non-blocking query processing
 
 ## 📊 API Endpoints
 
 - **`/api/air-quality`** - Get air quality data
 - **`/api/analyze`** - AI analysis of air quality
+- **`/api/agent-query`** - Multi-agent intelligent query system
 - **`/api/health-recommendations`** - Health recommendations
 - **`/api/health`** - Health check
 
