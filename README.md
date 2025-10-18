@@ -97,15 +97,24 @@ Configure these in Netlify Dashboard > Site Settings > Environment Variables:
 
 ## 🤖 Intelligent Agent System
 
-The platform includes two sophisticated AI agents built with Google Agent SDK:
+The platform includes a sophisticated multi-agent AI system built with **Google Agent Development Kit (ADK)**:
+
+### **Google ADK Integration** (`agent_working.py`)
+- **Purpose**: Enterprise-grade agent orchestration
+- **Capabilities**: 
+  - Google ADK framework integration
+  - BigQuery agent toolset
+  - Advanced natural language processing
+  - Intelligent query routing and state management
+  - Professional agent runner and session management
 
 ### **BigQuery Agent** (`multi_tool_agent_bquery_tools`)
 - **Purpose**: Real-time data analysis and querying
 - **Capabilities**: 
-  - Direct BigQuery integration
+  - Direct BigQuery integration with Google ADK tools
   - Complex air quality data analysis
   - Location-aware queries with county-to-state mapping
-  - Real-time data insights
+  - Real-time data insights with enterprise reliability
 
 ### **Multi-Tool Agent** (`multi_tool_agent`)
 - **Purpose**: General-purpose AI assistant
@@ -113,13 +122,15 @@ The platform includes two sophisticated AI agents built with Google Agent SDK:
   - Natural language processing
   - Health recommendations
   - Multi-domain knowledge
-  - Fallback support when BigQuery agent is unavailable
+  - Fallback support with graceful degradation
 
 ### **Agent Features**:
-- **Smart Location Detection**: Automatic county-to-state mapping
-- **Contextual Responses**: Understanding of air quality and health relationships
-- **Fallback Mechanisms**: Graceful degradation when services are unavailable
-- **Async Processing**: Non-blocking query processing
+- **Google ADK Framework**: Enterprise-grade agent development toolkit
+- **Smart Location Detection**: Automatic county-to-state mapping with 500+ county database
+- **Contextual Responses**: Deep understanding of air quality and health relationships
+- **Professional Agent Runner**: Managed execution environment with session persistence
+- **Fallback Mechanisms**: Multiple layers of graceful degradation
+- **Async Processing**: Non-blocking query processing with timeout management
 
 ## 📊 API Endpoints
 

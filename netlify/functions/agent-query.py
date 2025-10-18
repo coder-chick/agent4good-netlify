@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import traceback
+import asyncio
 from typing import Optional, Dict, Any
 
 # Add the agent directories to Python path
@@ -9,7 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'multi_tool_
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'multi_tool_agent_bquery_tools'))
 
 def handler(event, context):
-    """Netlify Function handler for multi-agent query system"""
+    """Netlify Function handler for multi-agent query system with Google ADK"""
     
     # Handle CORS
     headers = {
@@ -48,7 +49,21 @@ def handler(event, context):
                 })
             }
         
-        # Try to use the appropriate agent based on request
+        # Try Google ADK agents first
+        response = try_adk_agents(query, use_bigquery)
+        if response:
+            return {
+                'statusCode': 200,
+                'headers': headers,
+                'body': json.dumps({
+                    'success': True,
+                    'response': response,
+                    'agent': 'google-adk',
+                    'source': 'agent_working.py'
+                })
+            }
+        
+        # Fallback to direct agent modules
         if use_bigquery:
             response = try_bigquery_agent(query)
             if response:
@@ -107,6 +122,27 @@ def handler(event, context):
             })
         }
 
+
+def try_adk_agents(query: str, use_bigquery: bool = True) -> Optional[str]:
+    """Try to use the Google ADK agents from agent_working.py"""
+    try:
+        # Set up environment for ADK
+        os.environ.setdefault('GOOGLE_APPLICATION_CREDENTIALS', 'service-account-key.json')
+        
+        # Import the working agent system
+        import sys
+        sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+        
+        # Try to run the ADK agent system
+        from agent_working import run_query_with_adk
+        
+        # Run the ADK agent
+        result = run_query_with_adk(query)
+        return result
+        
+    except Exception as e:
+        print(f"ADK agent failed: {e}")
+        return None
 
 def try_bigquery_agent(query: str) -> Optional[str]:
     """Try to use the BigQuery agent"""
