@@ -19,6 +19,15 @@ async function build() {
             console.log('✅ Copied static assets');
         }
         
+        // Copy data directory with CSV files
+        const dataDir = path.join(__dirname, 'data');
+        const distDataDir = path.join(distDir, 'data');
+        
+        if (await fs.pathExists(dataDir)) {
+            await fs.copy(dataDir, distDataDir);
+            console.log('✅ Copied data files');
+        }
+        
         // Process HTML template
         const templatePath = path.join(__dirname, 'templates', 'index.html');
         const indexPath = path.join(distDir, 'index.html');

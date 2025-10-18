@@ -27,13 +27,13 @@ function setupEventListeners() {
         });
     }
 
-    // Chat to AI button
-    const chatButton = document.getElementById('chatToAIButton');
-    if (chatButton) {
-        chatButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Replace this URL with your actual chatbot link
-            window.open('https://your-chatbot-link-here.com', '_blank');
+    // Enter key for AI chat
+    const questionInput = document.getElementById('questionInput');
+    if (questionInput) {
+        questionInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                askAI();
+            }
         });
     }
 }
@@ -309,7 +309,7 @@ function updateChart(data) {
     });
 }
 
-// Ask AI function - now uses intelligent agents!
+// Ask AI function
 async function askAI() {
     const questionInput = document.getElementById('questionInput');
     const chatMessages = document.getElementById('chatMessages');
@@ -324,55 +324,33 @@ async function askAI() {
     questionInput.value = '';
 
     // Show loading
-    const loadingMsg = addMessage('🤖 Agent is analyzing your question...', 'bot');
+    const loadingMsg = addMessage('Thinking...', 'bot');
     
     try {
-        // First try the agent endpoint
-        const agentResponse = await fetch('/api/agent-query', {
+        // Try ADK agent first
+        const response = await fetch('/api/agent-chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                query: question,
-                use_bigquery: true  // Try to use real data if available
+                question: question,
+                state: currentState,
+                days: currentDays
             })
         });
 
-        const agentData = await agentResponse.json();
+        const data = await response.json();
 
         // Remove loading message
         loadingMsg.remove();
 
-        if (agentData.success) {
-            // Show which agent responded
-            const agentType = agentData.agent || 'unknown';
-            const source = agentData.source || 'unknown';
-            const badge = agentType === 'bigquery' ? '🎯 Real Data' : 
-                         agentType === 'simple' ? '🤖 AI Agent' : '💡 Demo';
-            
-            addMessage(`${badge}: ${agentData.response}`, 'bot');
+        if (data.success) {
+            // Add agent badge if available
+            const agentBadge = data.agent ? `<div class="text-xs text-gray-500 mt-1">via ${data.agent}</div>` : '';
+            addMessage(data.response + agentBadge, 'bot');
         } else {
-            // Fallback to original analyze endpoint
-            const fallbackResponse = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    question: question,
-                    state: currentState,
-                    days: currentDays
-                })
-            });
-
-            const fallbackData = await fallbackResponse.json();
-            
-            if (fallbackData.success) {
-                addMessage(fallbackData.analysis, 'bot');
-            } else {
-                addMessage('Sorry, I encountered an error. Please try again.', 'bot');
-            }
+            addMessage('Sorry, I encountered an error. Please try again.', 'bot');
         }
     } catch (error) {
         loadingMsg.remove();

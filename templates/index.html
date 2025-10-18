@@ -347,31 +347,49 @@
             </div>
             
             <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-                <!-- Chat to AI Button -->
-                <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-12 text-center">
-                    <div class="mb-6">
-                        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-robot text-emerald-600 text-4xl"></i>
+                <!-- Chat Header -->
+                <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot text-emerald-600 text-2xl"></i>
                         </div>
-                        <h3 class="text-white text-3xl font-bold mb-2">AI Health Assistant</h3>
-                        <p class="text-emerald-100 text-lg mb-8">Get personalized health insights and recommendations</p>
+                        <div>
+                            <h3 class="text-white text-2xl font-bold">Health AI Assistant</h3>
+                            <p class="text-emerald-100">Powered by Gemini AI</p>
+                        </div>
                     </div>
-                    
-                    <a 
-                        href="#" 
-                        id="chatToAIButton"
-                        class="inline-block bg-white hover:bg-gray-100 text-emerald-600 px-12 py-5 rounded-xl font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-xl"
-                    >
-                        <i class="fas fa-comments mr-3"></i>
-                        Chat to AI
-                    </a>
-                    
-                    <p class="text-emerald-100 text-sm mt-6">
-                        <i class="fas fa-info-circle mr-2"></i>
-                        Click the button to start a conversation with our AI assistant
-                    </p>
                 </div>
-
+                
+                <!-- Chat Messages -->
+                <div id="chatMessages" class="h-96 overflow-y-auto p-6 bg-gray-50 space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div class="bg-white rounded-2xl rounded-tl-none p-4 shadow-md max-w-lg">
+                            <p class="text-gray-700">Hello! I'm your AI health advisor. Ask me anything about air quality, disease risks, or health recommendations for your community.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div class="p-6 bg-white border-t border-gray-200">
+                    <div class="flex space-x-4">
+                        <input 
+                            type="text" 
+                            id="questionInput" 
+                            placeholder="Ask about health risks, symptoms, or recommendations..." 
+                            class="flex-1 px-6 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors text-lg"
+                        />
+                        <button 
+                            onclick="askAI()" 
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                        >
+                            <span>Send</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
